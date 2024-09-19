@@ -5,6 +5,8 @@ export const SearchAutocomplete = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useState('');
+  const [showDropDown, setShowDropDown] = useState(false);
 
   async function fetchUsers() {
     try {
@@ -34,11 +36,15 @@ export const SearchAutocomplete = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-  console.log(users);
 
   return (
     <div className='container'>
-      <input type='text' name='search-users' placeholder='Search Users ...' />
+      <input
+        type='text'
+        name='search-users'
+        placeholder='Search Users ...'
+        value={searchParams}
+      />
     </div>
   );
 };
