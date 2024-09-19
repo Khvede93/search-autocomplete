@@ -10,6 +10,12 @@ export const SearchAutocomplete = () => {
   const [showDropDown, setShowDropDown] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState([]);
 
+  function handleClick(e) {
+    setSearchParams(e.target.innerText);
+    setShowDropDown(false);
+    setFilteredUsers([]);
+  }
+
   function handleChange(e) {
     const query = e.target.value.toLowerCase();
     setSearchParams(query);
@@ -50,18 +56,23 @@ export const SearchAutocomplete = () => {
     fetchUsers();
   }, []);
 
-  console.log(users, filteredUsers, showDropDown);
-
   return (
     <div className='container'>
-      <input
-        type='text'
-        name='search-users'
-        placeholder='Search Users ...'
-        value={searchParams}
-        onChange={handleChange}
-      />
-      {showDropDown && <Suggestions data={filteredUsers} />}
+      {loading ? (
+        <h1>Loading Data ! Please Wait</h1>
+      ) : (
+        <input
+          type='text'
+          name='search-users'
+          placeholder='Search Users ...'
+          value={searchParams}
+          onChange={handleChange}
+        />
+      )}
+
+      {showDropDown && (
+        <Suggestions handleClick={handleClick} data={filteredUsers} />
+      )}
     </div>
   );
 };
