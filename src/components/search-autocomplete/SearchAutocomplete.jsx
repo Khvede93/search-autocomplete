@@ -7,6 +7,21 @@ export const SearchAutocomplete = () => {
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useState('');
   const [showDropDown, setShowDropDown] = useState(false);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
+  function handleChange(e) {
+    const query = e.target.value.toLowerCase();
+    setSearchParams(query);
+    if (query.length > 2) {
+      const filteredData =
+        users && users.length
+          ? users.filter((user) => user.toLowerCase().indexOf(query) > -1)
+          : [];
+      console.log(filteredData);
+
+      setFilteredUsers(filteredData);
+    }
+  }
 
   async function fetchUsers() {
     try {
@@ -18,12 +33,7 @@ export const SearchAutocomplete = () => {
       const data = await response.json();
 
       if (data && data.users && data.users.length) {
-        setUsers(
-          data.users.map((user) => ({
-            firstName: user.firstName,
-            lastName: user.lastName,
-          }))
-        );
+        setUsers(data.users.map((user) => user.firstName));
         setError(null);
       }
     } catch (error) {
@@ -32,6 +42,8 @@ export const SearchAutocomplete = () => {
       setLoading(false);
     }
   }
+
+  console.log(filteredUsers);
 
   useEffect(() => {
     fetchUsers();
@@ -44,6 +56,7 @@ export const SearchAutocomplete = () => {
         name='search-users'
         placeholder='Search Users ...'
         value={searchParams}
+        onChange={handleChange}
       />
     </div>
   );
