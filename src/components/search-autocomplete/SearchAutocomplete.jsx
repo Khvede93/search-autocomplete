@@ -8,9 +8,20 @@ export const SearchAutocomplete = () => {
 
   async function fetchUsers() {
     try {
+      setLoading(true);
+      const response = await fetch('https://dummyjson.com/users');
+      if (!response.ok) {
+        throw new Error('Something Went Wrong');
+      }
+      const data = await response.json();
+
+      if (data && data.users && data.users.length) {
+        setUsers(data.users);
+      }
     } catch (error) {
       setError(error);
     } finally {
+      setLoading(false);
     }
   }
 
