@@ -12,14 +12,16 @@ export const SearchAutocomplete = () => {
   function handleChange(e) {
     const query = e.target.value.toLowerCase();
     setSearchParams(query);
-    if (query.length > 2) {
+    if (query.length > 1) {
       const filteredData =
         users && users.length
           ? users.filter((user) => user.toLowerCase().indexOf(query) > -1)
           : [];
-      console.log(filteredData);
-
       setFilteredUsers(filteredData);
+      setShowDropDown(true);
+    } else {
+      setFilteredUsers([]);
+      setShowDropDown(false);
     }
   }
 
@@ -43,11 +45,11 @@ export const SearchAutocomplete = () => {
     }
   }
 
-  console.log(filteredUsers);
-
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  console.log(users, filteredUsers, showDropDown);
 
   return (
     <div className='container'>
