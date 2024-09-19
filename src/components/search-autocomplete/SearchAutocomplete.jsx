@@ -67,6 +67,7 @@ export const SearchAutocomplete = () => {
           placeholder='Search Users ...'
           value={searchParams}
           onChange={handleChange}
+          onClick={() => setSearchParams('')}
         />
       )}
 
