@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
+import { Suggestions } from './Suggestions';
 
 export const SearchAutocomplete = () => {
   const [loading, setLoading] = useState(false);
@@ -60,6 +61,7 @@ export const SearchAutocomplete = () => {
         value={searchParams}
         onChange={handleChange}
       />
+      {showDropDown && <Suggestions data={filteredUsers} />}
     </div>
   );
 };
