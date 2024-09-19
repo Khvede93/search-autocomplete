@@ -16,7 +16,13 @@ export const SearchAutocomplete = () => {
       const data = await response.json();
 
       if (data && data.users && data.users.length) {
-        setUsers(data.users);
+        setUsers(
+          data.users.map((user) => ({
+            firstName: user.firstName,
+            lastName: user.lastName,
+          }))
+        );
+        setError(null);
       }
     } catch (error) {
       setError(error);
@@ -28,6 +34,7 @@ export const SearchAutocomplete = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+  console.log(users);
 
   return (
     <div className='container'>
